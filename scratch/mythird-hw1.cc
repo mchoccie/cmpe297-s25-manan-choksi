@@ -123,7 +123,7 @@ main(int argc, char* argv[])
 
     mobility.SetMobilityModel("ns3::RandomWalk2dMobilityModel",
                               "Bounds",
-                              RectangleValue(Rectangle(-50, 50, -50, 50)));
+                              RectangleValue(Rectangle(-70, 70, -70, 70)));
     mobility.Install(wifiStaNodes);
     mobility.Install(csmaNodes);
     mobility.SetMobilityModel("ns3::ConstantPositionMobilityModel");
@@ -158,7 +158,7 @@ main(int argc, char* argv[])
 
     ApplicationContainer serverApps = echoServer.Install(wifiStaNodes.Get(2));
     serverApps.Start(Seconds(1.0));
-    serverApps.Stop(Seconds(60.0));
+    serverApps.Stop(Seconds(100.0));
 
     // This was CSMAInterfaces but changed to wifiinterfaces
     UdpEchoClientHelper echoClient(wifiInterfaces.GetAddress(2), 9);
@@ -168,13 +168,13 @@ main(int argc, char* argv[])
 
     ApplicationContainer clientApps = echoClient.Install(csmaNodes.Get(2));
     clientApps.Start(Seconds(2.0));
-    clientApps.Stop(Seconds(60.0));
+    clientApps.Stop(Seconds(100.0));
 
     Ipv4GlobalRoutingHelper::PopulateRoutingTables();
     FlowMonitorHelper flowmon;
     Ptr<FlowMonitor> monitor = flowmon.InstallAll();
 
-    Simulator::Stop(Seconds(60.0));
+    Simulator::Stop(Seconds(100.0));
 
     if (tracing)
     {
